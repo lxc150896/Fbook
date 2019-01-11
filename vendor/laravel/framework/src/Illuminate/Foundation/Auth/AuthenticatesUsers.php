@@ -153,8 +153,6 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
-        $cache = Cache::put('language', \Session::get('website-language'), config('view.limit.minutes'));
-
         $this->guard()->logout();
 
         $request->session()->invalidate();
