@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Eloquent\User;
 use App\Eloquent\Notification;
 use Auth;
+use App\Eloquent\Option;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('roles', null);
             }
         });
+
+        view()->share($this->option());
     }
 
     /**
@@ -34,5 +37,19 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    public function option()
+    {
+        $data['textFooters'] = Option::where(['key' => 'text_footer'])->get();
+        $data['banners'] = Option::where(['key' => 'banner'])->get();
+        $data['bannerBooks'] = Option::where(['key' => 'banner_book'])->get();
+        $data['apps'] = Option::where(['key' => 'app'])->get();
+        $data['textBanners'] = Option::where(['key' => 'text_banner'])->get();
+        $data['textApps'] = Option::where(['key' => 'app_text'])->get();
+        $data['contacts'] = Option::where(['key' => 'contact'])->get();
+        $data['address'] = Option::where(['key' => 'address'])->get();
+        $data['emails'] = Option::where(['key' => 'email'])->get();
+        return $data;
     }
 }
